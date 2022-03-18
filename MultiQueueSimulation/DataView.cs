@@ -65,11 +65,24 @@ namespace MultiQueueSimulation
             dt.Columns.Add("Average Waiting Time", typeof(decimal));
             dt.Columns.Add("Max Queue Length", typeof(int));
             dt.Columns.Add("Waiting Probability", typeof(decimal));
-            dt.Rows.Add(new object[] {
-                system.PerformanceMeasures.AverageWaitingTime,
-                system.PerformanceMeasures.MaxQueueLength,
-                system.PerformanceMeasures.WaitingProbability
-            });
+            for (int i = 0; i < system.NumberOfServers; i++)
+            {
+                dt.Columns.Add("Server " + (i + 1) + ": Idle Probability", typeof(decimal));
+                dt.Columns.Add("Server " + (i + 1) + ": Average Service Time", typeof(decimal));
+                dt.Columns.Add("Server " + (i + 1) + ": Utilization", typeof(decimal));
+            }
+            object[] data = new object[dt.Columns.Count];
+            int idx = 0;
+            data[idx++] = system.PerformanceMeasures.AverageWaitingTime;
+            data[idx++] = system.PerformanceMeasures.MaxQueueLength;
+            data[idx++] = system.PerformanceMeasures.WaitingProbability;
+            for (int i = 0; i < system.NumberOfServers; i++)
+            {
+                data[idx++] = system.Servers[i].IdleProbability;
+                data[idx++] = system.Servers[i].AverageServiceTime;
+                data[idx++] = system.Servers[i].Utilization;
+            }
+            dt.Rows.Add(data);
             dataGridView2.DataSource = dt;
         }
 
