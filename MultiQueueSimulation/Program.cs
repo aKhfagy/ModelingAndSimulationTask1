@@ -25,6 +25,7 @@ namespace MultiQueueSimulation
                 system.ReadInput();
                 system.Simulate();
                 system.CalculatePerformanceMeasures();
+                system.CalculateServerPerformance();
                 if (SimulationSystem.PATH[SimulationSystem.PATH.Length - 5] == '1')
                 {
                     MessageBox.Show("Test Case 1");
@@ -37,7 +38,7 @@ namespace MultiQueueSimulation
                     string result = TestingManager.Test(system, Constants.FileNames.TestCase2);
                     MessageBox.Show(result);
                 }
-                else
+                else if (SimulationSystem.PATH[SimulationSystem.PATH.Length - 5] == '3')
                 {
                     MessageBox.Show("Test Case 3");
                     string result = TestingManager.Test(system, Constants.FileNames.TestCase3);

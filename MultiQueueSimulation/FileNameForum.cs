@@ -41,7 +41,6 @@ namespace MultiQueueSimulation
                 else
                 {
                     SimulationSystem.PATH = path;
-                    MessageBox.Show("Opening: " + path);
                     this.Close();
                 }
             }

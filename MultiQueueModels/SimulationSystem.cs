@@ -212,13 +212,34 @@ namespace MultiQueueModels
         
         public void CalculateServerPerformance()
         {
-            
+            decimal endTime = 0;
+            for (int i = 0; i < this.SimulationTable.Count; i++)
+            {
+                endTime = Math.Max(this.SimulationTable[i].EndTime, endTime);
+            }
+            for (int i = 1; i <= this.NumberOfServers; i++)
+            {
+                decimal times = 0;
+                decimal numberCustomers = 0;
+                for (int j = 0; j < this.SimulationTable.Count; j++)
+                {
+                    if(this.SimulationTable[j].AssignedServer.ID == i)
+                    {
+                        times += this.SimulationTable[j].ServiceTime;
+                        numberCustomers++;
+                    }
+                }
+                this.Servers[i - 1].AverageServiceTime = (numberCustomers == 0) ? 0 : times / numberCustomers;
+                this.Servers[i - 1].IdleProbability = (endTime - times) / endTime;
+                this.Servers[i - 1].Utilization = times / endTime;
+            }
         }
 
         public void Simulate()
         {
             Random random = new Random();
             SimulationCase simulationCasePrev = new SimulationCase();
+            this.InitializeServerFinishTimes();
             for(int i = 1; i <= this.StoppingNumber; ++i)
             {
                 int randomArrival = random.Next(1, 100);
