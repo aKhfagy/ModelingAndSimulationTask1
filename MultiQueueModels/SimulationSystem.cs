@@ -219,7 +219,7 @@ namespace MultiQueueModels
         {
             Random random = new Random();
             SimulationCase simulationCasePrev = new SimulationCase();
-            for(int i = 1; i <= 100; ++i)
+            for(int i = 1; i <= this.StoppingNumber; ++i)
             {
                 int randomArrival = random.Next(1, 100);
                 int randomService = random.Next(1, 100);
